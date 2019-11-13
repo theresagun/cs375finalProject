@@ -1,16 +1,17 @@
-Q=finalProject
-FLAGS=g++ -Wall -Wextra -std=c++14 -g -DDEBUG
+CFLAGS=-Wall -Wextra -DDEBUG -g -std=c++14
+proj=finalProject
 
-all: $(Q).o
-	$(FLAGS) -o $(Q) $(Q).o
+all: $(proj).o Graph.o
+	g++ $(proj).o Graph.o -o $(proj)
 
-$(Q): $(Q).o
-	$(FLAGS) -o $(Q) $(Q).o
-$(Q).o: $(Q).cpp
-	$(FLAGS) -c $(Q).cpp
+$(proj).o: $(proj).cpp
+	g++ -c $(CFLAGS) $(proj).cpp
+
+Graph.o: Graph.cpp Graph.h
+	g++ -c $(CFLAGS) Graph.cpp
 
 run: all
-	./$(Q) testInput.txt output.txt
+	./$(proj) testinput.txt
 
-clean: all
-	rm -rf $(Q) *.o
+clean:
+	rm -rf *.o $(proj)

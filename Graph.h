@@ -17,8 +17,10 @@ public:
 
 class Graph{
 public:
+  int time;
   std::vector<Node> nodes;
   std::queue<Node> q;
+  Node getNode(int);
   void DFS();
   void DFSvisit(Node);
   void BFS();
