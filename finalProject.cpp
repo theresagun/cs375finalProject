@@ -28,14 +28,18 @@ int main(int argc, char** argv){
   }
   //cout << "while loop done" << endl;
   for(int i = 0 ; i < g.nodes.size() ; i++){
-    //cout << "node: " << g.nodes[i].id << endl;
+    cout << "node: " << g.nodes[i].id << endl;
     //cout << "adjacent size: " << g.nodes[i].adjacents.size() << endl;
     for(int j = 0 ; j < g.nodes[i].adjacents.size() ; j++){
-      //cout << "adjacents: " << g.nodes[i].adjacents[j] << endl;
+      cout << "adjacents: " << g.nodes[i].adjacents[j] << endl;
     }
   }
-  g.DFS();
+//  g.DFS();
+//  for(int i = 0 ; i < g.nodes.size() ; i++){
+//    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl;
+//  }
+  g.BFS(g.nodes[1]);
   for(int i = 0 ; i < g.nodes.size() ; i++){
-    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl; 
-  }
+     cout << "id: "<<g.nodes[i].id<<endl;
+    }
 }

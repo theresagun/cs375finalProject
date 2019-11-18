@@ -20,10 +20,10 @@ public:
   int time;
   std::vector<Node> nodes;
   std::queue<Node> q;
-  Node getNode(int);
+  int getNode(int);
   void DFS();
   void DFSvisit(Node);
-  void BFS();
+  void BFS(Node);
 };
 
 #endif

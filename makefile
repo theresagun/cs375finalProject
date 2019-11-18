@@ -11,7 +11,7 @@ Graph.o: Graph.cpp Graph.h
 	g++ -c $(CFLAGS) Graph.cpp
 
 run: all
-	./$(proj) testinput.txt
+	./$(proj) testInput.txt
 
 clean:
 	rm -rf *.o $(proj)
