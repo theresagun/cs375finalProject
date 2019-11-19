@@ -34,10 +34,10 @@ int main(int argc, char** argv){
       cout << "adjacents: " << g.nodes[i].adjacents[j] << endl;
     }
   }
-//  g.DFS();
-//  for(int i = 0 ; i < g.nodes.size() ; i++){
-//    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl;
-//  }
+  g.DFS();
+  for(int i = 0 ; i < g.nodes.size() ; i++){
+    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl;
+  }
   g.BFS(g.nodes[1]);
   for(int i = 0 ; i < g.nodes.size() ; i++){
      cout << "id: "<<g.nodes[i].id<<endl;
