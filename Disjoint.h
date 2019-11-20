@@ -33,8 +33,9 @@ class disjointSet{
 public:
   std::vector<disjointLL> S;
   void makeSet(Node);
-  Node findSet(Node);
+  int findSet(int);
   void unionSets(Node, Node);
+  std::vector<std::vector<int>> connectedComponents(Graph);
 };
 
 #endif

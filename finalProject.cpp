@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "Disjoint.h"
 #include <fstream>
 #include <vector>
 #include <cstdlib>
@@ -45,4 +46,7 @@ int main(int argc, char** argv){
   for(int i = 0 ; i < g.nodes.size() ; i++){
      cout << "id: "<<g.nodes[i].id<<endl;
   }
+  //disjoint shit
+  disjointSet ds = disjointSet();
+  vector<vector<int>> cc = ds.connectedComponents(g);
 }
