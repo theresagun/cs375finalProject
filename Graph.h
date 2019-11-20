@@ -22,7 +22,7 @@ public:
   std::queue<Node> q;
   int getNode(int);
   void DFS();
-  void DFSvisit(Node);
+  void DFSvisit(Node&);
   void BFS(Node);
 };
 

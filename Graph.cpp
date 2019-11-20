@@ -25,13 +25,15 @@ void Graph::DFS(){
   }
 }
 
-void Graph::DFSvisit(Node node){
+void Graph::DFSvisit(Node &node){
   time++;
   node.d = time;
   //cout << "time: " << time << endl;
   node.color = "gray";
   for(int i = 0 ; i < node.adjacents.size() ; i++){
+    cout << "node id: "<< node.id << endl;
     int index = getNode(node.adjacents[i]);
+    cout << "node at index: " << nodes[index].id << endl;
     if(nodes[index].color=="white"){
       nodes[index].parent = node.id;
       DFSvisit(nodes[index]);
