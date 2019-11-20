@@ -1,12 +1,15 @@
 CFLAGS=-Wall -Wextra -DDEBUG -g -std=c++14
 proj=finalProject
-
-all: $(proj).o Graph.o
-	g++ $(proj).o Graph.o -o $(proj)
+D=Disjoint
+all: $(proj).o Graph.o $(D).o
+	g++ $(proj).o Graph.o $(D).o -o $(proj)
 
 $(proj).o: $(proj).cpp
 	g++ -c $(CFLAGS) $(proj).cpp
 
+$(D).o: $(D).cpp $(D).h
+	g++ -c $(CFLAGS) $(D).cpp
+	
 Graph.o: Graph.cpp Graph.h
 	g++ -c $(CFLAGS) Graph.cpp
 
@@ -14,4 +17,4 @@ run: all
 	./$(proj) inputKate.txt
 
 clean:
-	rm -rf *.o $(proj)
+	rm -rf *.o $(proj) $(D) Graph
