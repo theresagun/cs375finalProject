@@ -12,6 +12,10 @@ public:
   int parent;
   int d;
   int f;
+  //for disjoint sets
+  Node * next; //next node
+  int setObj = -1; //set object index
+  //
   Node(int num){id=num;}
 };
 
