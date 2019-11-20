@@ -25,6 +25,8 @@ public:
   std::vector<Node> nodes;
   std::queue<Node> q;
   int getNode(int);
+  int getNodeT(int, std::vector<Node>);
+  std::vector<Node> transpose();
   void DFS();
   void DFSvisit(Node&);
   void BFS(Node);

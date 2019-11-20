@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <iostream>
 #include <queue>
+#include <vector>
 #include <limits>
 using namespace std;
 
@@ -8,10 +9,45 @@ int Graph::getNode(int num){
   for(int i = 0 ; i < nodes.size() ; i++){
     if(nodes[i].id==num){ return i; }
   }
-  return NULL;
+  return -1;
 }
 
-
+int Graph::getNodeT(int num, vector<Node> r){
+  for(int i = 0 ; i < r.size() ; i++){
+    if(r[i].id==num){
+      return i;
+    }
+  }
+  return -1;
+}
+vector<Node> Graph::transpose(){
+  vector<Node> ret;
+  for(int i = 0 ; i < nodes.size() ; i++){
+    for(int j = 0 ; j < nodes[i].adjacents.size() ; j++){
+      int t = nodes[i].adjacents[j];
+      int index = getNodeT(t, ret);
+      cout << "index: " << index << endl;
+      if(index==-1){
+        Node temp = Node(t);
+        temp.adjacents.push_back(nodes[i].id);
+        ret.push_back(temp);
+      }
+      else{
+        int index = getNodeT(t, ret);
+        if(index!=-1){
+          ret[index].adjacents.push_back(nodes[i].id);
+        }
+      }
+    }
+  }
+  for(int i = 0 ; i < ret.size() ; i++){
+    if(getNodeT(nodes[i].id, ret)==-1){
+      Node temp = Node(nodes[i].id);
+      ret.push_back(temp);
+    }
+  }
+  return ret;
+}
 void Graph::DFS(){
   for(int i = 0 ; i < nodes.size() ; i++){
     nodes[i].color="white";
