@@ -42,7 +42,3 @@ void disjointLL::insert(Node n){
   //update tail
   tail = &n;
 }
-
-int main(int argc, char ** argv){
-  cout << "running" << endl;
-}
