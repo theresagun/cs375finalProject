@@ -179,7 +179,7 @@ void Graph::BFS(Node s){
 }
 */
 
-
+/*
 vector<vector<Node>> Graph::BFSscc(){
   vector<vector<Node>> ret;
   for(int i = 0; i<nodes.size(); i++){
@@ -236,7 +236,7 @@ vector<vector<Node>> Graph::BFSscc(){
       }
     }
   }
-*/
+
   for(int i=0; i<ret.size(); i++){
     cout<<"new arrray"<<endl;
     cout<<"---";
@@ -248,8 +248,8 @@ vector<vector<Node>> Graph::BFSscc(){
 
   return ret;
 }
+*/
 
-/*
 vector<vector<Node>> Graph::BFSscc(){
   vector<vector<Node>> ret;
   for(int i = 0; i<nodes.size(); i++){
@@ -269,15 +269,13 @@ vector<vector<Node>> Graph::BFSscc(){
         Node temp = scc[i];
         for(int j = 0 ; j < scc[i].adjacents.size() ; j++){
           vector<Node> path;
-          cout<<"i is "<<i<<endl;
-          //cout<<temp.parent<<endl;
-          //cout<<temp.id<<endl;
           int idx=getNodeT(scc[i].adjacents[j], scc);
           Node adjacent = scc[idx];
           cout<<"Adjacent id  " <<adjacent.id<<endl;
           cout<<"  parent " <<temp.parent<<endl;
           cout<<"temp " <<temp.id<<endl;
-          while(temp.parent != adjacent.id && temp.parent!=NULL && temp.id != adjacent.id){
+//adjacent.id != temp.parent &&
+          while( temp.parent!=NULL && temp.id != adjacent.id){
             cout<<"  hereheh" <<endl;
             path.push_back(temp);
             int index = getNodeT(temp.parent, scc);
@@ -291,7 +289,7 @@ vector<vector<Node>> Graph::BFSscc(){
             }
             //temp = temp.parent;
           }
-          if(temp.parent!=NULL){
+          if(temp.id==adjacent.id){
             path.push_back(adjacent);
             ret.push_back(path);
           }
@@ -299,7 +297,7 @@ vector<vector<Node>> Graph::BFSscc(){
       }
     }
   }
-  /*
+
   for(int i=0; i<ret.size(); i++){
     cout<<"new arrray"<<endl;
     cout<<"---";
@@ -308,10 +306,10 @@ vector<vector<Node>> Graph::BFSscc(){
     }
     cout<<""<<endl;
   }
-//put comment here
+
   return ret;
 }
-*/
+
 
 void Graph::BFS(Node s, vector<Node>& t){
   s.color="g";
