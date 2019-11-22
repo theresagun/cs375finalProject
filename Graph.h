@@ -12,6 +12,7 @@ public:
   int parent;
   int d;
   int f;
+  bool visited;
   //for disjoint sets
   Node * next; //next node
   int setObj = -1; //set object index
@@ -29,7 +30,10 @@ public:
   std::vector<Node> transpose();
   void DFS();
   void DFSvisit(Node&);
-  void BFS(Node);
+  void BFS(Node, std::vector<Node> &);
+  std::vector<std::vector<Node>> BFSscc();
+  std::vector<std::vector<Node>> DFST();
+  void DFSvisitT(Node &node, std::vector<Node> &t, std::vector<Node> &s);
 };
 
 #endif

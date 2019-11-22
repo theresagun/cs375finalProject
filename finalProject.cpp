@@ -36,17 +36,26 @@ int main(int argc, char** argv){
       cout << "adjacents: " << g.nodes[i].adjacents[j] << endl;
     }
   }
-  /*g.DFS();
-  cout << g.nodes[1].color << endl;
-  for(int i = 0 ; i < g.nodes.size() ; i++){
-    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl;
-  }*/
-  //cout << g.nodes[0].id << endl;
-  g.BFS(g.nodes[1]);
-  for(int i = 0 ; i < g.nodes.size() ; i++){
-     cout << "id: "<<g.nodes[i].id<<endl;
+//  cout << g.nodes[1].color << endl;
+//  for(int i = 0 ; i < g.nodes.size() ; i++){
+//    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl;
+//  }
+/*
+  vector<vector<Node>> d=g.DFST();
+  for(int i=0; i<d.size(); i++){
+    cout << "new scc" <<endl;
+    for(int j=0; j<d[i].size(); j++){
+      cout << "---- ids  "<< d[i][j].id << ", ";
+    }
+    cout << endl;
   }
+*/
+  //cout << g.nodes[0].id << endl;
+  g.BFSscc();
+//  for(int i = 0 ; i < g.nodes.size() ; i++){
+//     cout << "id: "<<g.nodes[i].id<<endl;
+//  }
   //disjoint shit
-  disjointSet ds = disjointSet();
-  vector<vector<int>> cc = ds.connectedComponents(g);
+//  disjointSet ds = disjointSet();
+//  vector<vector<int>> cc = ds.connectedComponents(g);
 }

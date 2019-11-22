@@ -9,12 +9,12 @@ $(proj).o: $(proj).cpp
 
 $(D).o: $(D).cpp $(D).h
 	g++ -c $(CFLAGS) $(D).cpp
-	
+
 Graph.o: Graph.cpp Graph.h
 	g++ -c $(CFLAGS) Graph.cpp
 
 run: all
-	./$(proj) inputKate.txt
+	./$(proj) testbfs.txt
 
 clean:
 	rm -rf *.o $(proj) $(D) Graph
