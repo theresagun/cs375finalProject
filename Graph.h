@@ -13,11 +13,12 @@ public:
   int d;
   int f;
   bool visited;
+  bool added;
   //for disjoint sets
   Node * next; //next node
   int setObj = -1; //set object index
   //
-  Node(int num){id=num;}
+  Node(int num){id=num; added=false;}
 };
 
 class Graph{

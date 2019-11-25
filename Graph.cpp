@@ -67,6 +67,11 @@ bool comp(Node a, Node b){
   return false;
 }
 
+bool compBFS(Node a, Node b){
+  if(a.id < b.id) return true;
+  return false;
+}
+
 vector<vector<Node>> Graph::DFST(){
   vector<vector<Node>> ret;
   DFS();
@@ -253,23 +258,30 @@ vector<vector<Node>> Graph::BFSscc(){
 vector<vector<Node>> Graph::BFSscc(){
   vector<vector<Node>> ret;
   for(int i = 0; i<nodes.size(); i++){
-    for(int i=0; i<nodes.size(); i++){
+    for(int p=0; p<nodes.size(); p++){
       //if(nodes[i].id == s.id) continue;
-      nodes[i].color="w";
-      nodes[i].d = 2147483647;
-      nodes[i].parent= NULL;
-      nodes[i].visited=false;
+      nodes[p].color="w";
+      nodes[p].d = 2147483647;
+      nodes[p].parent= NULL;
+      nodes[p].visited=false;
+      //nodes[i].added=false;
     }
+    cout<<"NODES ADDED BEFORE IS " << nodes[i].added << endl;
+    // if(nodes[i].added == true){
+    //   cout<<"ADDDDDDDDDDDDDDEDDDDDDDDDDDDDD"<<endl;
+    //   continue;
+    // }
     if(nodes[i].color == "w"){
       vector<Node> scc;
       //scc.push_back(nodes[i]);
+    //  nodes[i].added=false;
       BFS(nodes[i], scc);   //see if adjacents lead back to source node
       cout << "scc size " << scc.size() <<endl;
-      for(int i = scc.size()-1 ; i >= 0 ; i--){
-        Node temp = scc[i];
-        for(int j = 0 ; j < scc[i].adjacents.size() ; j++){
+      for(int k = scc.size()-1 ; k >= 0 ; k--){
+        Node temp = scc[k];
+        for(int j = 0 ; j < scc[k].adjacents.size() ; j++){
           vector<Node> path;
-          int idx=getNodeT(scc[i].adjacents[j], scc);
+          int idx=getNodeT(scc[k].adjacents[j], scc);
           Node adjacent = scc[idx];
           cout<<"Adjacent id  " <<adjacent.id<<endl;
           cout<<"  parent " <<temp.parent<<endl;
@@ -282,6 +294,7 @@ vector<vector<Node>> Graph::BFSscc(){
             cout<<"index is  " <<index <<endl;
             if(scc[index].visited == false){
               scc[index].visited=true;
+              //scc[index].added = true;
               temp=scc[index];
             }
             else{
@@ -289,11 +302,26 @@ vector<vector<Node>> Graph::BFSscc(){
             }
             //temp = temp.parent;
           }
-          if(temp.id==adjacent.id){
+        //  cout<<"NODES ADDED AFTER IS " << nodes[i].added << endl;
+          if(temp.id==adjacent.id) {
+          //  cout << "inside hrwkjbrkj"<<endl;
             path.push_back(adjacent);
             ret.push_back(path);
+            //nodes[i].added = true;
           }
         }
+      }
+    }
+  }
+
+  for(int b=0; b<ret.size(); b++){
+      sort(ret[b].begin(), ret[b].end(), compBFS);
+  }
+
+  for(int m=0; m<ret.size(); m++){
+    for(int n=0; n<ret.size(); n++){
+      if(ret[m][0].id == ret[n][0].id){
+        ret.erase(ret.begin() + m);
       }
     }
   }
@@ -306,6 +334,8 @@ vector<vector<Node>> Graph::BFSscc(){
     }
     cout<<""<<endl;
   }
+
+
 
   return ret;
 }
@@ -322,7 +352,7 @@ void Graph::BFS(Node s, vector<Node>& t){
     queue<Node> temp = q;
     Node u = q.front();
     q.pop();
-    for(int i =0; i<u.adjacents.size(); i++ ){
+    for(int i = 0; i<u.adjacents.size(); i++ ){
       int index=getNode(u.adjacents[i]);
       if(nodes[index].color == "w"){
         nodes[index].color = "g";
@@ -330,6 +360,7 @@ void Graph::BFS(Node s, vector<Node>& t){
         nodes[index].parent=u.id;
         t.push_back(nodes[index]);
         q.push(nodes[index]);
+        nodes[index].added=true;
       }
       queue<Node> temp = q;
       cout<<"new value; size = "<<q.size()<<endl;
@@ -341,6 +372,9 @@ void Graph::BFS(Node s, vector<Node>& t){
     u.color="b";
 
   }
+  int p = getNode(s.id);
+  nodes[p].added = false;
+  cout<<"INSIDE HERE " <<  " nodes id " <<nodes[p].id <<" bool "<< nodes[p].added << endl;
   for(int i=0;i<t.size(); i++){
     cout<<"t id " <<t[i].id <<endl;
   }

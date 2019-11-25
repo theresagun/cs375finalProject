@@ -14,7 +14,7 @@ Graph.o: Graph.cpp Graph.h
 	g++ -c $(CFLAGS) Graph.cpp
 
 run: all
-	./$(proj) transInput.txt
+	./$(proj) testBFS.txt
 
 clean:
 	rm -rf *.o $(proj) $(D) Graph
