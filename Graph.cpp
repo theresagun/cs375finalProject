@@ -4,6 +4,7 @@
 #include <vector>
 #include <limits>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 int Graph::getNode(int num){
@@ -93,6 +94,8 @@ vector<vector<Node>> Graph::DFST(){
     }
     ret.push_back(scc);
   }
+
+
   cout<<"==========================SORT========================="<<endl;
   for(int i = 0 ; i < nodes.size() ; i++){
     cout<< "id " << nodes[i].id << " disc time  "<<nodes[i].d << " finish time "<< nodes[i].f<<endl;
@@ -101,7 +104,33 @@ vector<vector<Node>> Graph::DFST(){
   for(int i = 0 ; i < trans.size() ; i++){
     cout<< "id " << trans[i].id << " disc time  "<<trans[i].d << " finish time "<< trans[i].f<<endl;
   }
-  return ret;
+  cout << ret.size() << endl;
+  vector<vector<Node>> ret2;
+  for(int i=0; i< ret.size(); i++){
+    bool inside=false;
+
+    if(ret[i].size()>1) {
+      cout<<"true222" <<endl;
+      ret2.push_back(ret[i]);
+      //inside = true;
+    }
+    else if(ret[i].size() == 1){
+      cout<<" size " << ret[i].size() << "id " << ret[i][0].id<<endl;
+      for(int j=0; j< ret[i][0].adjacents.size(); j++){
+        cout<<"ret[i][0].id " << ret[i][0].id << "adj " <<ret[i][0].adjacents[j] << endl;
+        if(ret[i][0].id==ret[i][0].adjacents[j]){
+          inside=true;
+        }
+      }
+      if(inside == true){
+        cout<<"true" <<endl;
+        ret2.push_back(ret[i]);
+      }
+    }
+
+  }
+  cout << ret2.size() << ":::::" << endl;
+  return ret2;
 }
 
 
@@ -245,7 +274,7 @@ vector<vector<Node>> Graph::BFSscc(){
   for(int i=0; i<ret.size(); i++){
     cout<<"new arrray"<<endl;
     cout<<"---";
-    for(int j=0; j<ret[i].size(); j++){
+    for(int j=0;ZX j<ret[i].size(); j++){
       cout<< ret[i][j].id <<" , ";
     }
     cout<<""<<endl;
@@ -259,85 +288,111 @@ vector<vector<Node>> Graph::BFSscc(){
   vector<vector<Node>> ret;
   for(int i = 0; i<nodes.size(); i++){
     for(int p=0; p<nodes.size(); p++){
-      //if(nodes[i].id == s.id) continue;
       nodes[p].color="w";
       nodes[p].d = 2147483647;
       nodes[p].parent= NULL;
       nodes[p].visited=false;
-      //nodes[i].added=false;
     }
-    cout<<"NODES ADDED BEFORE IS " << nodes[i].added << endl;
-    // if(nodes[i].added == true){
-    //   cout<<"ADDDDDDDDDDDDDDEDDDDDDDDDDDDDD"<<endl;
-    //   continue;
-    // }
     if(nodes[i].color == "w"){
       vector<Node> scc;
       //scc.push_back(nodes[i]);
-    //  nodes[i].added=false;
       BFS(nodes[i], scc);   //see if adjacents lead back to source node
-      cout << "scc size " << scc.size() <<endl;
+      if(scc[0].id == scc[scc.size() -1].id){
+        scc.erase(scc.begin()+scc.size()-1);
+        ret.push_back(scc);
+      }
       for(int k = scc.size()-1 ; k >= 0 ; k--){
         Node temp = scc[k];
         for(int j = 0 ; j < scc[k].adjacents.size() ; j++){
           vector<Node> path;
           int idx=getNodeT(scc[k].adjacents[j], scc);
           Node adjacent = scc[idx];
-          cout<<"Adjacent id  " <<adjacent.id<<endl;
-          cout<<"  parent " <<temp.parent<<endl;
-          cout<<"temp " <<temp.id<<endl;
-//adjacent.id != temp.parent &&
           while( temp.parent!=NULL && temp.id != adjacent.id){
-            cout<<"  hereheh" <<endl;
             path.push_back(temp);
             int index = getNodeT(temp.parent, scc);
-            cout<<"index is  " <<index <<endl;
             if(scc[index].visited == false){
               scc[index].visited=true;
-              //scc[index].added = true;
               temp=scc[index];
             }
             else{
               break;
             }
-            //temp = temp.parent;
           }
-        //  cout<<"NODES ADDED AFTER IS " << nodes[i].added << endl;
           if(temp.id==adjacent.id) {
-          //  cout << "inside hrwkjbrkj"<<endl;
             path.push_back(adjacent);
             ret.push_back(path);
-            //nodes[i].added = true;
           }
         }
       }
     }
   }
 
+
   for(int b=0; b<ret.size(); b++){
       sort(ret[b].begin(), ret[b].end(), compBFS);
   }
+  // for(int m=0; m<ret.size(); m++){
+  //     ret2.push_back(ret[m]);
+  // }
+
 
   for(int m=0; m<ret.size(); m++){
-    for(int n=0; n<ret.size(); n++){
-      if(ret[m][0].id == ret[n][0].id){
-        ret.erase(ret.begin() + m);
+    for(int n=m+1; n<ret.size(); n++){
+      int size1=ret[m].size()-1;
+      int size2=ret[n].size()-1;
+      if(ret[m][size1].id == ret[n][size2].id || ret[m][0].id == ret[n][0].id  ){
+        if(ret[m].size() > ret[n].size()){
+          ret[n].clear();
+        }
+        else ret[m].clear();
+        //ret.erase(ret.begin() + m);
       }
     }
+}
+  vector<vector<Node>> ret2;
+  for(int m=0; m<ret.size(); m++){
+    if(ret[m].size() > 0) ret2.push_back(ret[m]);
   }
 
-  for(int i=0; i<ret.size(); i++){
-    cout<<"new arrray"<<endl;
-    cout<<"---";
-    for(int j=0; j<ret[i].size(); j++){
-      cout<< ret[i][j].id <<" , ";
+
+// cout<<"an" <<endl;
+//   set<int> indexes;
+//   //cout<<" ret 2 size is  " << ret2.size()<<endl;
+//   for(int m=0; m<ret.size(); m++){
+//     cout<< "m is " << m<<endl;
+//     for(int n=m; n<ret.size(); n++){
+//       cout<< "n is " << n<<endl;
+//       //cout<<"an" <<endl;
+//       //cout<<"ret[m][0] " <<ret[m][0].id <<endl;
+//       cout<<"Asfmf" << ret[n].size()<<endl;
+//       //cout<<"ret[n][0] " <<ret[n][0].id <<endl;
+//       if(ret[m].size()!=0 && ret[n].size()!=0){
+//          if(ret[m][0].id == ret[n][0].id){
+//         //ret.push_back(ret[m]);
+//           indexes.insert(m);
+//         }
+//         //ret.erase(ret.begin() + m);
+//       }
+//       cout<<"done"<<endl;
+//     }
+//   }
+//   for(auto s = indexes.end(); s!=indexes.begin(); s--){
+//     ret.erase(ret.begin() + *s);
+//   }
+
+
+    for(int i=0; i<ret2.size(); i++){
+      cout<<"new arrray"<<endl;
+      cout<<"---";
+      for(int j=0; j<ret2[i].size(); j++){
+        cout<< ret2[i][j].id <<" , ";
+      }
+      cout<<""<<endl;
     }
-    cout<<""<<endl;
-  }
 
 
 
-  return ret;
+    return ret2;
 }
 
 
@@ -363,9 +418,9 @@ void Graph::BFS(Node s, vector<Node>& t){
         nodes[index].added=true;
       }
       queue<Node> temp = q;
-      cout<<"new value; size = "<<q.size()<<endl;
+//      cout<<"new value; size = "<<q.size()<<endl;
       for(int i=0; i<q.size(); i++){
-        cout<<"=======value: " << temp.front().id<<endl;
+//        cout<<"=======value: " << temp.front().id<<endl;
         temp.pop();
       }
     }
@@ -374,8 +429,4 @@ void Graph::BFS(Node s, vector<Node>& t){
   }
   int p = getNode(s.id);
   nodes[p].added = false;
-  cout<<"INSIDE HERE " <<  " nodes id " <<nodes[p].id <<" bool "<< nodes[p].added << endl;
-  for(int i=0;i<t.size(); i++){
-    cout<<"t id " <<t[i].id <<endl;
-  }
 }

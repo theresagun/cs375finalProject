@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 //  for(int i = 0 ; i < g.nodes.size() ; i++){
 //    cout << g.nodes[i].id<<", " << g.nodes[i].color<<", " << g.nodes[i].d<<", " << g.nodes[i].f << endl;
 //  }
-/*
+
   vector<vector<Node>> d=g.DFST();
   for(int i=0; i<d.size(); i++){
     cout << "new scc" <<endl;
@@ -49,7 +49,7 @@ int main(int argc, char** argv){
     }
     cout << endl;
   }
-*/
+
   //cout << g.nodes[0].id << endl;
   g.BFSscc();
 //  for(int i = 0 ; i < g.nodes.size() ; i++){
