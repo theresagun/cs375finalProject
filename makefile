@@ -1,6 +1,6 @@
 CFLAGS=-Wall -Wextra -DDEBUG -g -std=c++14
 proj=finalProject
-D=Disjoint
+D=disjoint2
 all: $(proj).o Graph.o $(D).o
 	g++ $(proj).o Graph.o $(D).o -o $(proj)
 

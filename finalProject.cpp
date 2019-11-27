@@ -1,5 +1,5 @@
 #include "Graph.h"
-#include "Disjoint.h"
+#include "disjoint2.h"
 #include <fstream>
 #include <vector>
 #include <cstdlib>
@@ -64,7 +64,16 @@ int main(int argc, char** argv){
     cout << endl;
   }
 
-  //disjoint shit
-//  disjointSet ds = disjointSet();
-//  vector<vector<int>> cc = ds.connectedComponents(g);
+  auto start3=chrono::high_resolution_clock::now();
+  vector<vector<Node>> djs = g.disjointCC();
+  auto end3 = chrono::high_resolution_clock::now();
+  auto time3 = chrono::duration<double>(end3-start3);
+  output<<"Disjoint Set time for " << graphType << " graph "<<time3.count() <<"\n";
+  for(int i=0; i<djs.size(); i++){
+    for(int j=0; j<djs[i].size(); j++){
+      output<<djs[i][j].id << ", ";
+    }
+    output<<"\n";
+    cout << endl;
+  }
 }

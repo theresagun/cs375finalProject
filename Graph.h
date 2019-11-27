@@ -14,10 +14,6 @@ public:
   int f;
   bool visited;
   bool added;
-  //for disjoint sets
-  Node * next; //next node
-  int setObj = -1; //set object index
-  //
   Node(int num){id=num; added=false;}
 };
 
@@ -35,6 +31,7 @@ public:
   std::vector<std::vector<Node>> BFSscc();
   std::vector<std::vector<Node>> DFST();
   void DFSvisitT(Node &node, std::vector<Node> &t, std::vector<Node> &s);
+  std::vector<std::vector<Node>> disjointCC();
 };
 
 #endif

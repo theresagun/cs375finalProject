@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "disjoint2.h"
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -429,4 +430,35 @@ void Graph::BFS(Node s, vector<Node>& t){
   }
   int p = getNode(s.id);
   nodes[p].added = false;
+}
+
+vector<vector<Node>> Graph::disjointCC(){
+  /*puts each vertex in its own set, for each edge merge sets*/
+  disjoint dj;
+  //make each vertex a set
+  for(int i = 0; i < nodes.size(); i++){
+  //  cout << "heeeeere" << endl;
+    dj.makeSet(nodes[i]);
+  }
+  //for each edge, merge sets containing those vertices
+  for(int i = 0; i < nodes.size(); i++){
+    //for each node ie. u
+    for(int j = 0; j < nodes[i].adjacents.size(); j++){
+      //for each node ie. v
+      if(dj.findSet(nodes[i]) != dj.findSet(nodes[getNode(nodes[i].adjacents[j])])){
+        //if they are not in the same set, merge
+        dj.unionSets(nodes[i], nodes[getNode(nodes[i].adjacents[j])]);
+      }
+      cout << dj.S.size() << " AHHH" << endl;
+
+    }
+  }
+  cout << "\nPRINTING DISJOINT " << dj.S.size()<< endl;
+  for(int i = 0; i < dj.S.size(); i++){
+    for(int j = 0; j < dj.S[i].size(); j++){
+      cout << dj.S[i][j].id <<", ";
+    }
+    cout << "\n";
+  }
+  return dj.S;
 }
