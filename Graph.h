@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <string>
 #include <queue>
+#include <set>
 class Node{
 public:
   int id;
@@ -28,7 +29,7 @@ public:
   void DFS();
   void DFSvisit(Node&);
   void BFS(Node, std::vector<Node> &);
-  std::vector<std::vector<Node>> BFSscc();
+  std::set<std::set<Node>> BFSscc();
   std::vector<std::vector<Node>> DFST();
   void DFSvisitT(Node &node, std::vector<Node> &t, std::vector<Node> &s);
   std::vector<std::vector<Node>> disjointCC();

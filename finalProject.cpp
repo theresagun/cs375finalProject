@@ -52,13 +52,14 @@ int main(int argc, char** argv){
   }
 
   auto start2=chrono::high_resolution_clock::now();
-  vector<vector<Node>> b = g.BFSscc();
+  set<set<Node>> b = g.BFSscc();
   auto end2 = chrono::high_resolution_clock::now();
   auto time2 = chrono::duration<double>(end2-start2);
   output<<"BFS time for " << graphType << " graph "<<time2.count() <<"\n";
-  for(int i=0; i<b.size(); i++){
-    for(int j=0; j<b[i].size(); j++){
-      output<<b[i][j].id << ", ";
+  for(auto i=b.begin(); i!=b.end(); i++){
+    for(auto it=(*i).begin(); it!= (*i).end(); it++){
+      output<<(*it).id <<", ";
+      //output<<b[i][j].id << ", ";
     }
     output<<"\n";
     cout << endl;

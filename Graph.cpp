@@ -23,6 +23,11 @@ int Graph::getNodeT(int num, vector<Node> r){
   }
   return -1;
 }
+
+bool operator <(const Node& a, const Node& b){
+			return a.id < b.id;
+		}
+
 vector<Node> Graph::transpose(){
   vector<Node> ret;
   for(int i = 0 ; i < nodes.size() ; i++){
@@ -285,8 +290,9 @@ vector<vector<Node>> Graph::BFSscc(){
 }
 */
 
-vector<vector<Node>> Graph::BFSscc(){
-  vector<vector<Node>> ret;
+set<set<Node>> Graph::BFSscc(){
+  set<set<Node>> ret;
+  set<vector<Node>> finalSet;
   for(int i = 0; i<nodes.size(); i++){
     for(int p=0; p<nodes.size(); p++){
       nodes[p].color="w";
@@ -296,11 +302,10 @@ vector<vector<Node>> Graph::BFSscc(){
     }
     if(nodes[i].color == "w"){
       vector<Node> scc;
-      //scc.push_back(nodes[i]);
       BFS(nodes[i], scc);   //see if adjacents lead back to source node
-      if(scc[0].id == scc[scc.size() -1].id){
+      if(scc[0].id == scc[scc.size()-1].id){
         scc.erase(scc.begin()+scc.size()-1);
-        ret.push_back(scc);
+        finalSet.insert(scc);
       }
       for(int k = scc.size()-1 ; k >= 0 ; k--){
         Node temp = scc[k];
@@ -308,9 +313,10 @@ vector<vector<Node>> Graph::BFSscc(){
           vector<Node> path;
           int idx=getNodeT(scc[k].adjacents[j], scc);
           Node adjacent = scc[idx];
+          int c=0;
           while( temp.parent!=NULL && temp.id != adjacent.id){
             path.push_back(temp);
-            int index = getNodeT(temp.parent, scc);
+            int index=getNodeT(temp.parent, scc);
             if(scc[index].visited == false){
               scc[index].visited=true;
               temp=scc[index];
@@ -321,79 +327,34 @@ vector<vector<Node>> Graph::BFSscc(){
           }
           if(temp.id==adjacent.id) {
             path.push_back(adjacent);
-            ret.push_back(path);
+            finalSet.insert(path);
           }
         }
       }
     }
   }
-
-
-  for(int b=0; b<ret.size(); b++){
-      sort(ret[b].begin(), ret[b].end(), compBFS);
-  }
-  // for(int m=0; m<ret.size(); m++){
-  //     ret2.push_back(ret[m]);
-  // }
-
-
-  for(int m=0; m<ret.size(); m++){
-    for(int n=m+1; n<ret.size(); n++){
-      int size1=ret[m].size()-1;
-      int size2=ret[n].size()-1;
-      if(ret[m][size1].id == ret[n][size2].id || ret[m][0].id == ret[n][0].id  ){
-        if(ret[m].size() > ret[n].size()){
-          ret[n].clear();
-        }
-        else ret[m].clear();
-        //ret.erase(ret.begin() + m);
-      }
+  set<set<Node>> intermediate;
+  for(auto it=finalSet.begin(); it!= finalSet.end(); it++){
+    set<Node> oneSet;
+    for(int n=0; n<(*it).size(); n++){
+      oneSet.insert((*it)[n]);
     }
+    intermediate.insert(oneSet);
 }
-  vector<vector<Node>> ret2;
-  for(int m=0; m<ret.size(); m++){
-    if(ret[m].size() > 0) ret2.push_back(ret[m]);
-  }
 
-
-// cout<<"an" <<endl;
-//   set<int> indexes;
-//   //cout<<" ret 2 size is  " << ret2.size()<<endl;
-//   for(int m=0; m<ret.size(); m++){
-//     cout<< "m is " << m<<endl;
-//     for(int n=m; n<ret.size(); n++){
-//       cout<< "n is " << n<<endl;
-//       //cout<<"an" <<endl;
-//       //cout<<"ret[m][0] " <<ret[m][0].id <<endl;
-//       cout<<"Asfmf" << ret[n].size()<<endl;
-//       //cout<<"ret[n][0] " <<ret[n][0].id <<endl;
-//       if(ret[m].size()!=0 && ret[n].size()!=0){
-//          if(ret[m][0].id == ret[n][0].id){
-//         //ret.push_back(ret[m]);
-//           indexes.insert(m);
-//         }
-//         //ret.erase(ret.begin() + m);
-//       }
-//       cout<<"done"<<endl;
-//     }
-//   }
-//   for(auto s = indexes.end(); s!=indexes.begin(); s--){
-//     ret.erase(ret.begin() + *s);
-//   }
-
-
-    for(int i=0; i<ret2.size(); i++){
-      cout<<"new arrray"<<endl;
-      cout<<"---";
-      for(int j=0; j<ret2[i].size(); j++){
-        cout<< ret2[i][j].id <<" , ";
-      }
-      cout<<""<<endl;
+  for(auto it=intermediate.begin(); it!= intermediate.end(); it++){
+    bool add = true;
+    for(auto it2=intermediate.begin(); it2!= intermediate.end(); it2++){
+      if((*it2).size() == (*it).size()) continue;
+      if(std::includes((*it2).begin(), (*it2).end(), (*it).begin(), (*it).end(), compBFS)==true){
+          add=false;
+        }
     }
-
-
-
-    return ret2;
+    if(add ==  true) {
+      ret.insert(*(it));
+    }
+  }
+    return ret;
 }
 
 
@@ -419,9 +380,7 @@ void Graph::BFS(Node s, vector<Node>& t){
         nodes[index].added=true;
       }
       queue<Node> temp = q;
-//      cout<<"new value; size = "<<q.size()<<endl;
       for(int i=0; i<q.size(); i++){
-//        cout<<"=======value: " << temp.front().id<<endl;
         temp.pop();
       }
     }
@@ -431,6 +390,7 @@ void Graph::BFS(Node s, vector<Node>& t){
   int p = getNode(s.id);
   nodes[p].added = false;
 }
+
 
 vector<vector<Node>> Graph::disjointCC(){
   /*puts each vertex in its own set, for each edge merge sets*/
