@@ -1,0 +1,4 @@
+DFS time for dense graph 0.0005639
+1, 4, 5, 2,
+BFS time for dense graph 0.0003914
+1, 2, 4, 5,
