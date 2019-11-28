@@ -42,18 +42,18 @@ int main(int argc, char** argv){
   auto time1 = chrono::duration<double>(end1-start1);
   output<<"DFS time for " << graphType << " graph "<<time1.count() <<"\n";
   for(int i=0; i<d.size(); i++){
-    cout << "new scc" <<endl;
+  //  cout << "new scc" <<endl;
     for(int j=0; j<d[i].size(); j++){
       output<<d[i][j].id << ", ";
-      cout << "---- ids  "<< d[i][j].id << " ,";
+  //    cout << "---- ids  "<< d[i][j].id << " ,";
     }
     output<<"\n";
-    cout << endl;
+  //  cout << endl;
   }
 
   auto start2=chrono::high_resolution_clock::now();
   set<set<Node>> b = g.BFSscc();
-  cout<<"b size" <<b.size()<<endl;
+//  cout<<"b size" <<b.size()<<endl;
   auto end2 = chrono::high_resolution_clock::now();
   auto time2 = chrono::duration<double>(end2-start2);
   output<<"BFS time for " << graphType << " graph "<<time2.count() <<"\n";
@@ -63,7 +63,7 @@ int main(int argc, char** argv){
       //output<<b[i][j].id << ", ";
     }
     output<<"\n";
-    cout << endl;
+  //  cout << endl;
   }
 
   auto start3=chrono::high_resolution_clock::now();
@@ -76,7 +76,7 @@ int main(int argc, char** argv){
       output<<djs[i][j].id << ", ";
     }
     output<<"\n";
-    cout << endl;
+  //  cout << endl;
   }
   output.close();
 }
