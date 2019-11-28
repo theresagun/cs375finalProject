@@ -31,6 +31,10 @@ bool operator <(const Node& a, const Node& b){
 vector<Node> Graph::transpose(){
   vector<Node> ret;
   for(int i = 0 ; i < nodes.size() ; i++){
+    if(nodes[i].adjacents.size() == 0){
+      ret.push_back(nodes[i]);
+      continue;
+    }
     for(int j = 0 ; j < nodes[i].adjacents.size() ; j++){
       int t = nodes[i].adjacents[j];
       int index = getNodeT(t, ret);
@@ -85,6 +89,7 @@ vector<vector<Node>> Graph::DFST(){
   sort(nodes.begin(), nodes.end(), comp);
   vector<Node> trans= transpose();
   for(int i = 0 ; i < trans.size() ; i++){
+    cout<<"trans " << trans[i].id <<endl;
     trans[i].color="white";
     trans[i].parent = -1;
   }
@@ -93,13 +98,18 @@ vector<vector<Node>> Graph::DFST(){
     int index = getNodeT(nodes[i].id, trans);
     vector<Node> scc;
 
-  //  //cout<<"trans id "<<trans[index].id<<endl;
+    cout<<"trans id "<<trans[index].id<<endl;
     if(trans[index].color == "white"){
       scc.push_back(trans[index]);
+      cout<<" SCC size " << scc.size()<<endl;
       DFSvisitT(trans[index], trans, scc);
+      cout<<" SCC size 2 " << scc.size()<<endl;
     }
-    ret.push_back(scc);
+    if(scc.size() > 0 ){
+      ret.push_back(scc);
+    }
   }
+  return ret;
 
 
 //  //cout<<"==========================SORT========================="<<endl;
@@ -116,26 +126,20 @@ vector<vector<Node>> Graph::DFST(){
     bool inside=false;
 
     if(ret[i].size()>1) {
-  //    //cout<<"true222" <<endl;
       ret2.push_back(ret[i]);
-      //inside = true;
     }
     else if(ret[i].size() == 1){
-  //    //cout<<" size " << ret[i].size() << "id " << ret[i][0].id<<endl;
       for(int j=0; j< ret[i][0].adjacents.size(); j++){
-  //      //cout<<"ret[i][0].id " << ret[i][0].id << "adj " <<ret[i][0].adjacents[j] << endl;
         if(ret[i][0].id==ret[i][0].adjacents[j]){
           inside=true;
         }
       }
       if(inside == true){
-    //    //cout<<"true" <<endl;
         ret2.push_back(ret[i]);
       }
     }
 
   }
-//  //cout << ret2.size() << ":::::" << endl;
   return ret2;
 }
 
