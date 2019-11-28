@@ -9,7 +9,7 @@ def numGen(low, high, f):
         #random adjs
         added = []
         for i in range(5):
-            toAdd = random.randint(low, high+1)
+            toAdd = random.randint(low, high)
             if toAdd not in added:
                 added.append(toAdd)
                 f.write(str(toAdd))
@@ -22,7 +22,7 @@ def main():
     numNodes = int(input("Enter desired number of nodes: "))
     f = open("large1.txt", "w")
     for i in range(0, numNodes, numNodes//10):
-        numGen(i, i+(numNodes//10), f)
+        numGen(i, i+(numNodes//10)-1, f)
     f.close()
 
 main()

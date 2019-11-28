@@ -53,14 +53,14 @@ void disjoint::unionSets(Node x, Node y){
      }
   }
   //already in same set
-  cout << "x ind is " << xIndex << " y ind is " << yIndex << endl;
+//  cout << "x ind is " << xIndex << " y ind is " << yIndex << endl;
   if(xIndex == yIndex) return;
 //  cout << "yrep is " << yRep->id << endl;
   //add y to this set
 //  S[xIndex].push_back(y);
   //cout << "size of s[yindex] is " << S[yIndex].size() << endl;
   for(int i = 0; i < S[yIndex].size(); i++){
-    cout << "yup" << i << endl;
+  //  cout << "yup" << i << endl;
     S[xIndex].push_back(S[yIndex][i]);
   }
   //delete y's set

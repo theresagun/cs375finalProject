@@ -14,7 +14,7 @@ Graph.o: Graph.cpp Graph.h
 	g++ -c $(CFLAGS) Graph.cpp
 
 run: all
-	./$(proj) ugh.txt dense
+	./$(proj) large1.txt dense
 
 clean:
 	rm -rf *.o $(proj) $(D) Graph
