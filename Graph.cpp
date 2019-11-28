@@ -406,11 +406,10 @@ vector<vector<Node>> Graph::disjointCC(){
     for(int j = 0; j < nodes[i].adjacents.size(); j++){
       cout << "-ADJ " << nodes[i].adjacents[j] << endl;
       //TODO check if node i is an adjacent of nodes[i].adjacents[j]
-    //  cout << "herehfke" << endl;
   //    if(nodes[i].id == nodes[getNode(nodes[i].adjacents[j])].id){
     //    cout << "IN IF " << nodes[i].id << " is an adj of " << nodes[i].adjacents[j] << endl;
       //for each node ie. v
-      if(dj.findSet(nodes[i]) != dj.findSet(nodes[getNode(nodes[i].adjacents[j])])){ //OG
+      if(dj.findSet(nodes[i]) != dj.findSet(nodes[getNode(nodes[i].adjacents[j])])){ //from notes
       //if they are not in the same set
       //  if(nodes[i].id == nodes[i].adjacents[j]){
         //
@@ -419,7 +418,6 @@ vector<vector<Node>> Graph::disjointCC(){
       //  }
       }
     //  cout << dj.S.size() << " AHHH" << endl;
-
     }
   }
   cout << "\nPRINTING DISJOINT " << dj.S.size()<< endl;
