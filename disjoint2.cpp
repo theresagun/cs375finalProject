@@ -14,7 +14,6 @@ void disjoint::makeSet(Node x){
   newSet.push_back(x);
   //insert set to set of sets
   S.push_back(newSet);
-  //cout << "size of S is " << S.size() << endl;
 }
 
 Node * disjoint::findSet(Node x){
@@ -23,12 +22,9 @@ Node * disjoint::findSet(Node x){
   for(int i = 0; i < S.size(); i++){
     //checks elements
     for(int j = 0; j < S[i].size(); j++){
-    //  if(S[i].find(x) != S.end()){
-  //    if(S[i].find(S[i].begin(), S[i].end(), x) != S[i].end()){
       if(S[i][j].id == x.id){
         //if it is in the set, return the first item in this set
         return &S[i][0];
-    //    return &(*(S[i].begin()));
       }
     }
   }
@@ -53,36 +49,11 @@ void disjoint::unionSets(Node x, Node y){
      }
   }
   //already in same set
-//  cout << "x ind is " << xIndex << " y ind is " << yIndex << endl;
   if(xIndex == yIndex) return;
-//  cout << "yrep is " << yRep->id << endl;
   //add y to this set
-//  S[xIndex].push_back(y);
-  //cout << "size of s[yindex] is " << S[yIndex].size() << endl;
   for(int i = 0; i < S[yIndex].size(); i++){
-  //  cout << "yup" << i << endl;
     S[xIndex].push_back(S[yIndex][i]);
   }
   //delete y's set
   S.erase(S.begin() + yIndex);
 }
-
-// vector<vector<Node>> disjoint::disjointCC(Graph g){
-//   /*puts each vertex in its own set, for each edge merge sets*/
-//   //make each vertex a set
-//   for(int i = 0; i < g.nodes.size(); i++){
-//     makeSet(g.nodes[i]);
-//   }
-//   //for each edge, merge sets containing those vertices
-//   for(int i = 0; i < g.nodes.size(); i++){
-//     //for each node ie. u
-//     for(int j = 0; j < g.node[i].adjacents.size(); j++){
-//       //for each node ie. v
-//       if(findSet(g.nodes[i]) != findSet(g.nodes[g.getNode(g.nodes.adjacents[j])])){
-//         //if they are not in the same set, merge
-//         unionSets(g.nodes[i], g.nodes[g.getNode(g.nodes.adjacents[j])]);
-//       }
-//     }
-//   }
-//   return S;
-// }

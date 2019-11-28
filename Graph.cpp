@@ -419,30 +419,16 @@ vector<vector<Node>> Graph::disjointCC(){
   //for each edge, merge sets containing those vertices
   for(int i = 0; i < nodes.size(); i++){
     //for each node ie. u
-    cout << "\n---NODE " << nodes[i].id << endl;
+    //cout << "\n---NODE " << nodes[i].id << endl;
     for(int j = 0; j < nodes[i].adjacents.size(); j++){
-      cout << "-ADJ " << nodes[i].adjacents[j] << endl;
-      //TODO check if node i is an adjacent of nodes[i].adjacents[j]
-  //    if(nodes[i].id == nodes[getNode(nodes[i].adjacents[j])].id){
-    //    cout << "IN IF " << nodes[i].id << " is an adj of " << nodes[i].adjacents[j] << endl;
+      //cout << "-ADJ " << nodes[i].adjacents[j] << endl;
       //for each node ie. v
       if(dj.findSet(nodes[i]) != dj.findSet(nodes[getNode(nodes[i].adjacents[j])])){ //from notes
       //if they are not in the same set
-      //  if(nodes[i].id == nodes[i].adjacents[j]){
-        //
-        cout << "union " << nodes[i].id << " " << nodes[i].adjacents[j] << endl;
+        //cout << "union " << nodes[i].id << " " << nodes[i].adjacents[j] << endl;
           dj.unionSets(nodes[i], nodes[getNode(nodes[i].adjacents[j])]);
-      //  }
       }
-    //  cout << dj.S.size() << " AHHH" << endl;
     }
-  }
-  cout << "\nPRINTING DISJOINT " << dj.S.size()<< endl;
-  for(int i = 0; i < dj.S.size(); i++){
-    for(int j = 0; j < dj.S[i].size(); j++){
-      cout << dj.S[i][j].id <<", ";
-    }
-    cout << "\n";
   }
   return dj.S;
 }

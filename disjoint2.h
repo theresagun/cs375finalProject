@@ -10,7 +10,6 @@ public:
   void makeSet(Node);
   Node * findSet(Node);
   void unionSets(Node, Node);
-  //std::vector<std::vector<Node>> disjointCC(Graph);
 };
 
 #endif
