@@ -20,7 +20,7 @@ def numGen(low, high, f):
 
 def main():
     numNodes = int(input("Enter desired number of nodes: "))
-    f = open("large1.txt", "w")
+    f = open("large2.txt", "w")
     for i in range(0, numNodes, numNodes//10):
         numGen(i, i+(numNodes//10)-1, f)
     f.close()

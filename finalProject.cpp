@@ -36,20 +36,20 @@ int main(int argc, char** argv){
   ifstream sparse; ifstream dense;
   ofstream output;
   output.open("output.txt");
-  // auto start1=chrono::high_resolution_clock::now();
-  // vector<vector<Node>> d=g.DFST();
-  // auto end1 = chrono::high_resolution_clock::now();
-  // auto time1 = chrono::duration<double>(end1-start1);
-  // output<<"DFS time for " << graphType << " graph "<<time1.count() <<"\n";
-  // for(int i=0; i<d.size(); i++){
-  //   cout << "new scc" <<endl;
-  //   for(int j=0; j<d[i].size(); j++){
-  //     output<<d[i][j].id << ", ";
-  //     cout << "---- ids  "<< d[i][j].id << " ,";
-  //   }
-  //   output<<"\n";
-  //   cout << endl;
-  // }
+  auto start1=chrono::high_resolution_clock::now();
+  vector<vector<Node>> d=g.DFST();
+  auto end1 = chrono::high_resolution_clock::now();
+  auto time1 = chrono::duration<double>(end1-start1);
+  output<<"DFS time for " << graphType << " graph "<<time1.count() <<"\n";
+  for(int i=0; i<d.size(); i++){
+    cout << "new scc" <<endl;
+    for(int j=0; j<d[i].size(); j++){
+      output<<d[i][j].id << ", ";
+      cout << "---- ids  "<< d[i][j].id << " ,";
+    }
+    output<<"\n";
+    cout << endl;
+  }
 
   auto start2=chrono::high_resolution_clock::now();
   set<set<Node>> b = g.BFSscc();
