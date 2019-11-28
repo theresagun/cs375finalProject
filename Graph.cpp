@@ -300,21 +300,32 @@ set<set<Node>> Graph::BFSscc(){
       nodes[p].parent= NULL;
       nodes[p].visited=false;
     }
-    if(nodes[i].color == "w"){
-      vector<Node> scc;
+    if(nodes[i].color == "w" && nodes[i].added == false){
+      //cout<<"here" <<endl;
+      set<Node> scc;
       BFS(nodes[i], scc);   //see if adjacents lead back to source node
+    //  for(int i=0; i<scc.size(); i++){
+    //    cout<<"scc val " << scc[i].id<<endl;
+    //  }
+      ret.insert(scc);
+    }
+  }
+      /*
+      cout<<"here" <<endl;
       if(scc[0].id == scc[scc.size()-1].id){
         scc.erase(scc.begin()+scc.size()-1);
         finalSet.insert(scc);
       }
       for(int k = scc.size()-1 ; k >= 0 ; k--){
         Node temp = scc[k];
+        cout<<"here2" <<endl;
         for(int j = 0 ; j < scc[k].adjacents.size() ; j++){
           vector<Node> path;
           int idx=getNodeT(scc[k].adjacents[j], scc);
           Node adjacent = scc[idx];
           int c=0;
           while( temp.parent!=NULL && temp.id != adjacent.id){
+            cout<<"here3" <<endl;
             path.push_back(temp);
             int index=getNodeT(temp.parent, scc);
             if(scc[index].visited == false){
@@ -322,6 +333,7 @@ set<set<Node>> Graph::BFSscc(){
               temp=scc[index];
             }
             else{
+              cout<<"ended" <<endl;
               break;
             }
           }
@@ -330,9 +342,12 @@ set<set<Node>> Graph::BFSscc(){
             finalSet.insert(path);
           }
         }
+        cout<<"bot" <<endl;
       }
     }
+    cout<<"ended" <<endl;
   }
+
   set<set<Node>> intermediate;
   for(auto it=finalSet.begin(); it!= finalSet.end(); it++){
     set<Node> oneSet;
@@ -354,28 +369,30 @@ set<set<Node>> Graph::BFSscc(){
       ret.insert(*(it));
     }
   }
+  */
+    cout<<"ended" <<endl;
     return ret;
 }
 
 
-void Graph::BFS(Node s, vector<Node>& t){
+void Graph::BFS(Node s, set<Node>& t){
   s.color="g";
   s.d=0;
   s.parent=NULL;
   queue<Node> q;
   q.push(s);
-  t.push_back(s);
+  t.insert(s);
   while(!q.empty()){
     queue<Node> temp = q;
     Node u = q.front();
     q.pop();
     for(int i = 0; i<u.adjacents.size(); i++ ){
       int index=getNode(u.adjacents[i]);
-      if(nodes[index].color == "w"){
+      if(index != -1 && nodes[index].color == "w"){
         nodes[index].color = "g";
         nodes[index].d = u.d + 1;
         nodes[index].parent=u.id;
-        t.push_back(nodes[index]);
+        t.insert(nodes[index]);
         q.push(nodes[index]);
         nodes[index].added=true;
       }

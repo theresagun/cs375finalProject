@@ -28,7 +28,7 @@ public:
   std::vector<Node> transpose();
   void DFS();
   void DFSvisit(Node&);
-  void BFS(Node, std::vector<Node> &);
+  void BFS(Node, std::set<Node> &);
   std::set<std::set<Node>> BFSscc();
   std::vector<std::vector<Node>> DFST();
   void DFSvisitT(Node &node, std::vector<Node> &t, std::vector<Node> &s);
