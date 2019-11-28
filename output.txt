@@ -1,13 +1,8 @@
-DFS time for dense graph 0.0009057
-2, 7, 8, 3, 
-12, 11, 
-9, 5, 10, 
-1, 6, 
-BFS time for dense graph 0.0009864
-1, 6, 
-2, 3, 7, 8, 
-5, 9, 10, 
-11, 12, 
-Disjoint Set time for dense graph 0.0001846
-2, 3, 4, 8, 7, 12, 9, 11, 10, 5, 
-1, 6, 
+DFS time for dense graph 0.000382672
+3, 6, 
+1, 4, 5, 2, 
+BFS time for dense graph 0.000817907
+1, 2, 4, 5, 
+3, 6, 
+Disjoint Set time for dense graph 0.000172618
+1, 3, 2, 5, 6, 4, 

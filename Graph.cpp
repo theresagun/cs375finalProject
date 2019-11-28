@@ -397,19 +397,28 @@ vector<vector<Node>> Graph::disjointCC(){
   disjoint dj;
   //make each vertex a set
   for(int i = 0; i < nodes.size(); i++){
-  //  cout << "heeeeere" << endl;
     dj.makeSet(nodes[i]);
   }
   //for each edge, merge sets containing those vertices
   for(int i = 0; i < nodes.size(); i++){
     //for each node ie. u
+    cout << "\n---NODE " << nodes[i].id << endl;
     for(int j = 0; j < nodes[i].adjacents.size(); j++){
+      cout << "-ADJ " << nodes[i].adjacents[j] << endl;
+      //TODO check if node i is an adjacent of nodes[i].adjacents[j]
+    //  cout << "herehfke" << endl;
+  //    if(nodes[i].id == nodes[getNode(nodes[i].adjacents[j])].id){
+    //    cout << "IN IF " << nodes[i].id << " is an adj of " << nodes[i].adjacents[j] << endl;
       //for each node ie. v
-      if(dj.findSet(nodes[i]) != dj.findSet(nodes[getNode(nodes[i].adjacents[j])])){
-        //if they are not in the same set, merge
-        dj.unionSets(nodes[i], nodes[getNode(nodes[i].adjacents[j])]);
+      if(dj.findSet(nodes[i]) != dj.findSet(nodes[getNode(nodes[i].adjacents[j])])){ //OG
+      //if they are not in the same set
+      //  if(nodes[i].id == nodes[i].adjacents[j]){
+        //
+        cout << "union " << nodes[i].id << " " << nodes[i].adjacents[j] << endl;
+          dj.unionSets(nodes[i], nodes[getNode(nodes[i].adjacents[j])]);
+      //  }
       }
-      cout << dj.S.size() << " AHHH" << endl;
+    //  cout << dj.S.size() << " AHHH" << endl;
 
     }
   }
