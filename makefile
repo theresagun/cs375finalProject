@@ -14,7 +14,7 @@ Graph.o: Graph.cpp Graph.h
 	g++ -c $(CFLAGS) Graph.cpp
 
 run: all
-	./$(proj) large3.txt large
+	./$(proj) small3.txt small
 
 clean:
 	rm -rf *.o $(proj) $(D) Graph
