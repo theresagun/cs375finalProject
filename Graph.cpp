@@ -85,20 +85,16 @@ bool compBFS(Node a, Node b){
 
 vector<vector<Node>> Graph::DFST(){
   vector<vector<Node>> ret;
-  DFS();
-  sort(nodes.begin(), nodes.end(), comp);
-  vector<Node> trans= transpose();
-  for(int i = 0 ; i < trans.size() ; i++){
-    trans[i].color="white";
-    trans[i].parent = -1;
+  for(int i = 0 ; i < nodes.size() ; i++){
+    nodes[i].color="white";
+    nodes[i].parent = -1;
   }
   time = 0;
-  for(int i = 0 ; i < trans.size() ; i++){
-    int index = getNodeT(nodes[i].id, trans);
+  for(int i = 0 ; i < nodes.size() ; i++){
     vector<Node> scc;
-    if(trans[index].color == "white"){
-      scc.push_back(trans[index]);
-      DFSvisitT(trans[index], trans, scc);
+    if(nodes[i].color == "white"){
+      scc.push_back(nodes[i]);
+      DFSvisitT(nodes[i], nodes, scc);
     }
     if(scc.size() > 0 ){
       ret.push_back(scc);
@@ -123,6 +119,7 @@ void Graph::DFSvisitT(Node &node, vector<Node> &t, vector<Node> &s){
   time++;
   node.f = time;
 }
+
 
 void Graph::DFSvisit(Node &node){
   time++;
